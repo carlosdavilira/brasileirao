@@ -126,7 +126,7 @@ public void pesquisaTabelaPorAno(){
         List<tabela> resultado = new ArrayList<>();
         ResultSet rs = null;
         try {
-            stmt = con.prepareStatement("SELECT * FROM tabela,campeonato where (tabela.campeonatoid = campeontao.campeonatoid) and campeonato.ano = ? ");
+            stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and campeonatos.ano = ? ");
             stmt.executeQuery();
             
             while (rs.next()) {                
