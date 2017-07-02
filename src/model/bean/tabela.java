@@ -98,30 +98,6 @@ public class tabela {
         }   
     }
     
- 
-    
-    
-     public static void main(String[] args){
-        tabela t = new tabela();
-        t.resultados(3, 3, 0);
-        t.resultados(4, 3, 1);
-        t.resultados(5, 3, 2);
-        t.resultados(4, 5, 3);
-        t.setPontos();
-        t.setVitorias();
-        t.setDerrotas();
-        t.setEmpate();
-        t.setGols_feitos();
-        t.setGols_sofridos();
-        t.setS_gols();
-       
-        
-        t.setnomes("Palmeiras", 0);
-        t.setnomes("São Paulo", 1);
-        t.setnomes("Flamengo", 2);
-        t.setnomes("Gremio", 3);
-         System.out.println(Arrays.deepToString(t.r_Pontos));
-    }
      public void setTabela(){
         tabela t = new tabela();
         t.setVitorias();
