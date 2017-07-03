@@ -36,41 +36,43 @@ public class TabelaDao {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {   
-            stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where tabela.time = ? and (tabela.campeonatoid=campeonatos.campeonatoid) and campeonatos.ano=? ");
+            stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and tabela.time = ? and campeonatos.ano=?");
+             
             for (int i = 0; i < 4; i++) {  
             stmt.setString(1, t.getnomes(i));
-            stmt.setInt(2, a);
-            rs = stmt.executeQuery();
+            stmt.setInt(2, a);        
+           
             
             }
+             rs = stmt.executeQuery();
             
-            if(rs==null){
+            if(rs.next() == false){
             
             Connection con1 = ConnectionFactory.getConnection(); 
-                PreparedStatement stmt1 = null;
-                stmt1 = con.prepareStatement("INSERT INTO tabela(time,pontos,vitorias,derrotas,empates,gols_feitos,gols_sofridos,\n" +
-"                   saldo_gols,jogos,campeonatoid) VALUES(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement stmt1 = null;
+                stmt1 = con.prepareStatement("INSERT INTO tabela(time,pontos,vitorias,derrotas,empates,gols_feitos,gols_sofridos" 
+                + ",saldo_gols,jogos,campeonatoid) VALUES(?,?,?,?,?,?,?,?,1,?)");
                 for (int i = 0; i < 4; i++) {
                     
-                stmt.setString(1, t.getnomes(i));    
-                stmt.setInt(2, t.getTabela(i, 0));
-                stmt.setInt(2, t.getTabela(i, 2));
-                stmt.setInt(4, t.getTabela(i, 3));
-                stmt.setInt(5, t.getTabela(i, 4));
-                stmt.setInt(6, t.getTabela(i, 5));
-                stmt.setInt(7, t.getTabela(i, 6));
-                stmt.setInt(8, t.getTabela(i, 7));
-                stmt.setInt(9,campeonatoid);   
-                stmt.executeUpdate();
+                stmt1.setString(1, t.getnomes(i));    
+                stmt1.setInt(2, t.getTabela(i, 0));
+                stmt1.setInt(3, t.getTabela(i, 2));
+                stmt1.setInt(4, t.getTabela(i, 3));
+                stmt1.setInt(5, t.getTabela(i, 4));
+                stmt1.setInt(6, t.getTabela(i, 5));
+                stmt1.setInt(7, t.getTabela(i, 6));
+                stmt1.setInt(8, t.getTabela(i, 7));
+                stmt1.setInt(9,campeonatoid);   
+                stmt1.executeUpdate();
                 }
            
             }
-            else{
+            else {
             
             stmt = con.prepareStatement("UPDATE tabela set pontos = pontos + ? ,vitorias= vitorias + ? ,derrotas= derrotas + ?,empates= empates + ?"
-                    + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1, campeonatoid = ? WHERE time=?");
+                    + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1, campeonatoid = ? WHERE time=? ");
             for (int i = 0; i < 4; i++) {
-
+            
             stmt.setInt(1, t.getTabela(i, 0));
             stmt.setInt(2, t.getTabela(i, 2));
             stmt.setInt(3, t.getTabela(i, 3));
@@ -82,14 +84,14 @@ public class TabelaDao {
             stmt.setString(9, t.getnomes(i));
             stmt.executeUpdate();
             }
-            }
             
+            }
             JOptionPane.showMessageDialog(null, "Salvo com sucesso");
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             
-         ConnectionFactory.closeConnection(con, stmt);
+         ConnectionFactory.closeConnection(con, stmt,rs);
         
         }    
     }
@@ -187,7 +189,7 @@ public List<tabela> pesquisaTabelaPorAno(int a){
             Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             
-         ConnectionFactory.closeConnection(con, stmt);
+         ConnectionFactory.closeConnection(con, stmt,rs);
         
         }    
         return resultado;
