@@ -14,8 +14,8 @@ import java.util.Arrays;
 
 public class tabela {
     
-    int b_time[][] = new int[4][2];
-    int  r_Pontos[][]=new int[4][8];
+    int b_time[][] = new int[40][2];
+    int  r_Pontos[][]=new int[40][8];
     String nomes_time[]= new String[4];
     int ano;
     
