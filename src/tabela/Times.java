@@ -300,7 +300,7 @@ public class Times extends javax.swing.JInternalFrame {
         t.setnomes("Gremio", 3);
         //teste2
         dao.pesquisaAno(Integer.parseInt(Tnomes.getText()));
-        dao.create(t);
+        dao.create(t,Integer.parseInt( Tnomes.getText()));
         
        
         
