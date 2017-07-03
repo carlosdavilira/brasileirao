@@ -122,7 +122,7 @@ public void removedados(){
         }    
     }
     
-public List<tabela> pesquisaTabelaPorAno(){
+public List<tabela> pesquisaTabelaPorAno(int a){
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
@@ -130,7 +130,7 @@ public List<tabela> pesquisaTabelaPorAno(){
         ResultSet rs = null;
         try {
             stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and campeonatos.ano = ? ");
-            stmt.setInt(1, 2011);
+            stmt.setInt(1, a);
              rs = stmt.executeQuery();
    
             
@@ -161,7 +161,7 @@ public List<tabela> pesquisaTabelaPorAno(){
         return resultado;
     }
 
-public String pesquisaPorAno(int ano){
+public String pesquisaAno(int ano){
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;

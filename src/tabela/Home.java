@@ -236,7 +236,7 @@ public class Home extends javax.swing.JFrame {
         exibir2 exibir = new exibir2();
         jDesktopPane1.add(exibir);
         a = JOptionPane.showInputDialog(null, "Entre com o ano");
-        exibir.PesquisarAno();
+        exibir.PesquisarAno(Integer.parseInt(a));
         exibir.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

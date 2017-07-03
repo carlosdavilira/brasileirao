@@ -52,12 +52,12 @@ public class exibir2 extends javax.swing.JInternalFrame {
     
     
     }
-    public void PesquisarAno(){
+    public void PesquisarAno(int a){
     DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
     TabelaDao tdao = new TabelaDao ();
     
         
-        for (tabela t: tdao.pesquisaTabelaPorAno()) {
+        for (tabela t: tdao.pesquisaTabelaPorAno(a)) {
             modelo.addRow(new Object[]{
                 t.getnomes(0),
                 t.getTabela(0,0),
