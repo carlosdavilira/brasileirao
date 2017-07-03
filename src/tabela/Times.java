@@ -299,7 +299,7 @@ public class Times extends javax.swing.JInternalFrame {
         t.setnomes("Flamengo", 2);
         t.setnomes("Gremio", 3);
         //teste2
-        dao.pesquisaPorAno(Integer.parseInt(Tnomes.getText()));
+        dao.pesquisaAno(Integer.parseInt(Tnomes.getText()));
         dao.create(t);
         
        
