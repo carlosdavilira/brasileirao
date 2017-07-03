@@ -161,7 +161,7 @@ public List<tabela> pesquisaTabelaPorAno(int a){
         return resultado;
     }
 
-public String pesquisaAno(int ano){
+public void pesquisaAno(int ano){
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
@@ -172,32 +172,35 @@ public String pesquisaAno(int ano){
             stmt.setInt(1, ano);
              rs = stmt.executeQuery();
    
-            
+            if(rs==null){
+                
             if (rs.next()) {                
               //passar id do campeonato dentro do insert da tabela
               int idCampeonato = rs.getInt("campeonatoid");
               this.campeonatoid = idCampeonato;
              
               // insert em tabela 
-              
-              
-            } 
+       
+            } }
             else
             {
                 Connection con1 = ConnectionFactory.getConnection(); 
                 PreparedStatement stmt1 = null;
                 stmt1 = con.prepareStatement("insert into campeonatos(ano) values(?)");
                 stmt1.setInt(1,ano);
+                stmt1.executeUpdate();
                 
                 Connection con2 = ConnectionFactory.getConnection();
-                PreparedStatement stmt2 = null;
+                PreparedStatement stmt2 = null;          
                 stmt2 = con2.prepareStatement("SELECT * FROM campeonatos where campeonatos.ano = ? ");
                 stmt2.setInt(1, ano);
-                rs = stmt2.executeQuery();
-                 int idCampeonato = rs.getInt("campeonatoid");
+                ResultSet rs2 = null;
+                rs2 = stmt2.executeQuery();
+                 if (rs2.next()) { 
+                 int idCampeonato = rs2.getInt("campeonatoid");
                  this.campeonatoid = idCampeonato;
-                
-                JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+                 }
+            
          } 
             
             
@@ -205,7 +208,7 @@ public String pesquisaAno(int ano){
             Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             
-         ConnectionFactory.closeConnection(con, stmt);
+       
          ConnectionFactory.closeConnection(con, stmt, rs);
         
         }
@@ -213,7 +216,7 @@ public String pesquisaAno(int ano){
         
     } catch (Exception e) {
     }
-        return null;
+       
     }
 }
 //teste2
