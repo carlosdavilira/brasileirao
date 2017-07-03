@@ -23,18 +23,20 @@ import model.bean.tabela;
  * @author betim
  */
 public class TabelaDao {
+    public int campeonatoid=0;
     
     /**
      *
      * @param t
      */
     public void create(tabela t){
+        
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement("UPDATE tabela set pontos = pontos + ? ,vitorias= vitorias + ? ,derrotas= derrotas + ?,empates= empates + ?"
-                    + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1 WHERE time=?");
+                    + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1, campeonatoid = ? WHERE time=?");
             for (int i = 0; i < 4; i++) {
 
             stmt.setInt(1, t.getTabela(i, 0));
@@ -44,7 +46,8 @@ public class TabelaDao {
             stmt.setInt(5, t.getTabela(i, 5));
             stmt.setInt(6, t.getTabela(i, 6));
             stmt.setInt(7, t.getTabela(i, 7));
-            stmt.setString(8, t.getnomes(i));
+            stmt.setInt(8,campeonatoid);
+            stmt.setString(9, t.getnomes(i));
             stmt.executeUpdate();
             }
    
@@ -119,7 +122,7 @@ public void removedados(){
         }    
     }
     
-public void pesquisaTabelaPorAno(){
+public List<tabela> pesquisaTabelaPorAno(){
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
@@ -127,12 +130,13 @@ public void pesquisaTabelaPorAno(){
         ResultSet rs = null;
         try {
             stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and campeonatos.ano = ? ");
-            stmt.executeQuery();
+            stmt.setInt(1, 2011);
+             rs = stmt.executeQuery();
+   
             
             while (rs.next()) {                
                 
               tabela t = new tabela();
- 
               t.setnomes(rs.getString("time"),0);
               t.setTabela(0, 0, rs.getInt("pontos"));
               t.setTabela(0, 1, rs.getInt("jogos"));
@@ -141,7 +145,8 @@ public void pesquisaTabelaPorAno(){
               t.setTabela(0, 4, rs.getInt("empates"));
               t.setTabela(0, 5, rs.getInt("gols_feitos"));
               t.setTabela(0, 6, rs.getInt("gols_sofridos"));
-              t.setTabela(0, 7, rs.getInt("saldo_gols"));          
+              t.setTabela(0, 7, rs.getInt("saldo_gols"));        
+              
               resultado.add(t);
             }  
             
@@ -153,6 +158,62 @@ public void pesquisaTabelaPorAno(){
          ConnectionFactory.closeConnection(con, stmt);
         
         }    
+        return resultado;
+    }
+
+public String pesquisaPorAno(int ano){
+        Connection con = ConnectionFactory.getConnection();
+       
+        PreparedStatement stmt = null;
+        List<tabela> resultado = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            stmt = con.prepareStatement("SELECT * FROM campeonatos where campeonatos.ano = ? ");
+            stmt.setInt(1, ano);
+             rs = stmt.executeQuery();
+   
+            
+            if (rs.next()) {                
+              //passar id do campeonato dentro do insert da tabela
+              int idCampeonato = rs.getInt("campeonatoid");
+              this.campeonatoid = idCampeonato;
+             
+              // insert em tabela 
+              
+              
+            } 
+            else
+            {
+                Connection con1 = ConnectionFactory.getConnection(); 
+                PreparedStatement stmt1 = null;
+                stmt1 = con.prepareStatement("insert into campeonatos(ano) values(?)");
+                stmt1.setInt(1,ano);
+                
+                Connection con2 = ConnectionFactory.getConnection();
+                PreparedStatement stmt2 = null;
+                stmt2 = con2.prepareStatement("SELECT * FROM campeonatos where campeonatos.ano = ? ");
+                stmt2.setInt(1, ano);
+                rs = stmt2.executeQuery();
+                 int idCampeonato = rs.getInt("campeonatoid");
+                 this.campeonatoid = idCampeonato;
+                
+                JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+         } 
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            
+         ConnectionFactory.closeConnection(con, stmt);
+         ConnectionFactory.closeConnection(con, stmt, rs);
+        
+        }
+        try {
+        
+    } catch (Exception e) {
+    }
+        return null;
     }
 }
-//teste
+//teste2

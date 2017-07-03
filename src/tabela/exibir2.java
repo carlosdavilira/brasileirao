@@ -22,14 +22,16 @@ public class exibir2 extends javax.swing.JInternalFrame {
      
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        lerTabela();
+        
+       
         
         
     }
     public void lerTabela(){
     DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
     TabelaDao tdao = new TabelaDao ();
-       
+   
+    
         for (tabela t: tdao.read()) {
             modelo.addRow(new Object[]{
                 
@@ -48,6 +50,29 @@ public class exibir2 extends javax.swing.JInternalFrame {
         }
     
     
+    
+    }
+    public void PesquisarAno(){
+    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+    TabelaDao tdao = new TabelaDao ();
+    
+        
+        for (tabela t: tdao.pesquisaTabelaPorAno()) {
+            modelo.addRow(new Object[]{
+                t.getnomes(0),
+                t.getTabela(0,0),
+                t.getTabela(0,1),
+                t.getTabela(0,2),
+                t.getTabela(0,3),
+                t.getTabela(0,4),
+                t.getTabela(0,5),
+                t.getTabela(0,6),
+                t.getTabela(0,7),
+                
+            
+            });
+        }
+  
     
     }
 

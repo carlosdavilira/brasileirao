@@ -6,6 +6,7 @@
 package tabela;
 
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import model.dao.TabelaDao;
 
 /**
@@ -48,6 +49,7 @@ public class Home extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jRadioButtonMenuItem6 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem7 = new javax.swing.JRadioButtonMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(12, 198, 12));
@@ -163,6 +165,14 @@ public class Home extends javax.swing.JFrame {
         jRadioButtonMenuItem7.setText("Pesquisar por Pontos");
         jMenu1.add(jRadioButtonMenuItem7);
 
+        jMenuItem1.setText("Pesquisar por Ano");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar2.add(jMenu1);
 
         setJMenuBar(jMenuBar2);
@@ -188,6 +198,7 @@ public class Home extends javax.swing.JFrame {
     private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
         exibir2 exibir = new exibir2();
         jDesktopPane1.add(exibir);
+        exibir.lerTabela();
         exibir.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
@@ -218,6 +229,16 @@ public class Home extends javax.swing.JFrame {
         TabelaDao dao = new TabelaDao();
         dao.removedados();
     }//GEN-LAST:event_jRadioButtonMenuItem8ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String a;
+        exibir2 exibir = new exibir2();
+        jDesktopPane1.add(exibir);
+        a = JOptionPane.showInputDialog(null, "Entre com o ano");
+        exibir.PesquisarAno();
+        exibir.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,6 +284,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;

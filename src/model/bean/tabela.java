@@ -17,6 +17,7 @@ public class tabela {
     int b_time[][] = new int[4][2];
     int  r_Pontos[][]=new int[4][8];
     String nomes_time[]= new String[4];
+    String ano;
     
    
     public void resultados(int c,int f,int i) {
@@ -47,7 +48,17 @@ public class tabela {
              r_Pontos[k][o]= s;
  
     }
+    public String getano(){
     
+        return ano;
+    }
+    
+    public void setano(String a){
+    
+    ano= a;
+    
+    
+    }
     
     
     public void setPontos(){
@@ -108,6 +119,8 @@ public class tabela {
         t.setS_gols();
   
 }
+
+    
      
 }
 
