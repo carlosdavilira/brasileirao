@@ -41,7 +41,6 @@ public class Home extends javax.swing.JFrame {
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem3 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -112,15 +111,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jRadioButtonMenuItem3);
-
-        jRadioButtonMenuItem4.setText("Exibir Libertadores");
-        jRadioButtonMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Soccer Ball_25px_1.png"))); // NOI18N
-        jRadioButtonMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jRadioButtonMenuItem4);
 
         jRadioButtonMenuItem5.setText("Exibir Ultimos");
         jRadioButtonMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Down_25px.png"))); // NOI18N
@@ -216,10 +206,6 @@ public class Home extends javax.swing.JFrame {
         exibir.setVisible(true);
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
-    private void jRadioButtonMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonMenuItem4ActionPerformed
-
     private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
@@ -291,7 +277,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem4;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem6;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem7;

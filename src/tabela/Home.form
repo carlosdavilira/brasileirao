@@ -77,17 +77,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonMenuItem3ActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Exibir Libertadores"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Soccer Ball_25px_1.png"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonMenuItem4ActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem5">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exibir Ultimos"/>
