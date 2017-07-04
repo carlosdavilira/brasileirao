@@ -209,6 +209,12 @@ public class Home extends javax.swing.JFrame {
 
     private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
         // TODO add your handling code here:
+      
+        exibir2 exibir = new exibir2();
+        jDesktopPane1.add(exibir);
+       
+        exibir.lerPrimeiro();
+        exibir.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
     private void jRadioButtonMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem8ActionPerformed
