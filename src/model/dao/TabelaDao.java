@@ -26,6 +26,7 @@ import model.bean.tabela;
 public class TabelaDao {
     public int campeonatoid=0;
     public int idtime[]=new int[4];
+ 
     
     /**
      *
@@ -33,33 +34,39 @@ public class TabelaDao {
      */
     public void create(tabela t, int a){
         
+        
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
         
         try {   
-            System.out.println(campeonatoid);
+            ResultSet rs222 = null;
             stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and tabela.time = ? and campeonatos.ano=?");
-             ResultSet rs = null;
+             
             for (int i = 0; i < 4; i++) {  
             stmt.setString(1, t.getnomes(i));
-            stmt.setInt(2, a);  
-            
-            
-            if (rs.next()) {          
-             int idtime1 = rs.getInt("idtime"); 
+            stmt.setInt(2, a); 
+             rs222 = stmt.executeQuery();
+//             for (int j = 0; j < 4; j++) {
+           if(rs222.next()){
+             int idtime1 = rs222.getInt("idtime"); 
              this.idtime[i]= idtime1;
               System.out.println(Arrays.toString(this.idtime));
-                
-            }}
-            rs = stmt.executeQuery();
+                 }    }
             
-            if(rs.next()){
+            ResultSet rs22 = null;
+            stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and tabela.time = ? and campeonatos.ano=?");
+            stmt.setString(1, t.getnomes(1));
+            stmt.setInt(2, a);
+            rs22 = stmt.executeQuery();
+            if(rs22.next()){
+ 
+                System.out.println("Executei if(rs.next())");
             
                 stmt = con.prepareStatement("UPDATE tabela set pontos = pontos + ? ,vitorias= vitorias + ? ,derrotas= derrotas + ?,empates= empates + ?"
                     + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1, campeonatoid = ? WHERE time = ? and idtime = ? ");
             for (int i = 0; i < 4; i++) {
-            
+       
             stmt.setInt(1, t.getTabela(i, 0));
             stmt.setInt(2, t.getTabela(i, 2));
             stmt.setInt(3, t.getTabela(i, 3));
@@ -72,9 +79,10 @@ public class TabelaDao {
             stmt.setInt(10, idtime[i]);
             stmt.executeUpdate();
             }
-      
+               
+                
             }else{
-            
+            System.out.println("Executei else");
             Connection con1 = ConnectionFactory.getConnection(); 
             PreparedStatement stmt1 = null;
                 stmt1 = con.prepareStatement("INSERT INTO tabela(time,pontos,vitorias,derrotas,empates,gols_feitos,gols_sofridos" 
@@ -94,14 +102,13 @@ public class TabelaDao {
                 }
             
             }
+            rs22.close();
             JOptionPane.showMessageDialog(null, "Salvo com sucesso");
+            ConnectionFactory.closeConnection(con, stmt);
         } catch (SQLException ex) {
             Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            
-         ConnectionFactory.closeConnection(con, stmt);
-        
-        }    
+        }   
+         
     }
     
     
@@ -238,8 +245,7 @@ public void pesquisaAno(int ano){
                 rs2 = stmt2.executeQuery();
                 System.out.println("select");
                  if (rs2.next()) { 
-                     
-                 
+             
                  int idCampeonato = rs2.getInt("campeonatoid");
                 
                  this.campeonatoid = idCampeonato;
