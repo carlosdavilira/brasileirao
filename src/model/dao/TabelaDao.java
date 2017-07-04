@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ import model.bean.tabela;
  */
 public class TabelaDao {
     public int campeonatoid=0;
+    public int idtime[]=new int[4];
     
     /**
      *
@@ -34,19 +36,44 @@ public class TabelaDao {
         Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
-        ResultSet rs = null;
+        
         try {   
+            System.out.println(campeonatoid);
             stmt = con.prepareStatement("SELECT * FROM tabela,campeonatos where (tabela.campeonatoid = campeonatos.campeonatoid) and tabela.time = ? and campeonatos.ano=?");
-             
+             ResultSet rs = null;
             for (int i = 0; i < 4; i++) {  
             stmt.setString(1, t.getnomes(i));
-            stmt.setInt(2, a);        
-           
+            stmt.setInt(2, a);  
             
+            
+            if (rs.next()) {          
+             int idtime1 = rs.getInt("idtime"); 
+             this.idtime[i]= idtime1;
+              System.out.println(Arrays.toString(this.idtime));
+                
+            }}
+            rs = stmt.executeQuery();
+            
+            if(rs.next()){
+            
+                stmt = con.prepareStatement("UPDATE tabela set pontos = pontos + ? ,vitorias= vitorias + ? ,derrotas= derrotas + ?,empates= empates + ?"
+                    + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1, campeonatoid = ? WHERE time = ? and idtime = ? ");
+            for (int i = 0; i < 4; i++) {
+            
+            stmt.setInt(1, t.getTabela(i, 0));
+            stmt.setInt(2, t.getTabela(i, 2));
+            stmt.setInt(3, t.getTabela(i, 3));
+            stmt.setInt(4, t.getTabela(i, 4));
+            stmt.setInt(5, t.getTabela(i, 5));
+            stmt.setInt(6, t.getTabela(i, 6));
+            stmt.setInt(7, t.getTabela(i, 7));
+            stmt.setInt(8,campeonatoid);
+            stmt.setString(9, t.getnomes(i));
+            stmt.setInt(10, idtime[i]);
+            stmt.executeUpdate();
             }
-             rs = stmt.executeQuery();
-            
-            if(rs.next() == false){
+      
+            }else{
             
             Connection con1 = ConnectionFactory.getConnection(); 
             PreparedStatement stmt1 = null;
@@ -65,25 +92,6 @@ public class TabelaDao {
                 stmt1.setInt(9,campeonatoid);   
                 stmt1.executeUpdate();
                 }
-           
-            }
-            else {
-            
-            stmt = con.prepareStatement("UPDATE tabela set pontos = pontos + ? ,vitorias= vitorias + ? ,derrotas= derrotas + ?,empates= empates + ?"
-                    + " ,gols_feitos = gols_feitos + ?, gols_sofridos = gols_sofridos + ?, saldo_gols = saldo_gols + ?, jogos = jogos +1, campeonatoid = ? WHERE time=? ");
-            for (int i = 0; i < 4; i++) {
-            
-            stmt.setInt(1, t.getTabela(i, 0));
-            stmt.setInt(2, t.getTabela(i, 2));
-            stmt.setInt(3, t.getTabela(i, 3));
-            stmt.setInt(4, t.getTabela(i, 4));
-            stmt.setInt(5, t.getTabela(i, 5));
-            stmt.setInt(6, t.getTabela(i, 6));
-            stmt.setInt(7, t.getTabela(i, 7));
-            stmt.setInt(8,campeonatoid);
-            stmt.setString(9, t.getnomes(i));
-            stmt.executeUpdate();
-            }
             
             }
             JOptionPane.showMessageDialog(null, "Salvo com sucesso");
@@ -91,7 +99,7 @@ public class TabelaDao {
             Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             
-         ConnectionFactory.closeConnection(con, stmt,rs);
+         ConnectionFactory.closeConnection(con, stmt);
         
         }    
     }
@@ -206,35 +214,38 @@ public void pesquisaAno(int ano){
             stmt.setInt(1, ano);
             rs = stmt.executeQuery();
    
-            if(rs==null){
+            if(rs.next()){
                 
-            if (rs.next()) {                
+                           
               //passar id do campeonato dentro do insert da tabela
-              int idCampeonato = rs.getInt("campeonatoid");
+              int idCampeonato = rs.getInt("campeonatoid"); 
               this.campeonatoid = idCampeonato;
              
               // insert em tabela 
-       
-            } }
-            else
-            {
+             }else{
                 Connection con1 = ConnectionFactory.getConnection(); 
                 PreparedStatement stmt1 = null;
                 stmt1 = con.prepareStatement("insert into campeonatos(ano) values(?)");
                 stmt1.setInt(1,ano);
                 stmt1.executeUpdate();
-                
+                System.out.println("insert");
+                 
                 Connection con2 = ConnectionFactory.getConnection();
-                PreparedStatement stmt2 = null;          
-                stmt2 = con2.prepareStatement("SELECT * FROM campeonatos where campeonatos.ano = ? ");
-                stmt2.setInt(1, ano);
+                PreparedStatement stmt2 = null;    
                 ResultSet rs2 = null;
+                stmt2 = con2.prepareStatement("SELECT * FROM campeonatos where campeonatos.ano = ? ");
+                stmt2.setInt(1, ano);    
                 rs2 = stmt2.executeQuery();
+                System.out.println("select");
                  if (rs2.next()) { 
+                     
+                 
                  int idCampeonato = rs2.getInt("campeonatoid");
+                
                  this.campeonatoid = idCampeonato;
-                 }
-            
+                 
+              }
+               
          } 
             
             
@@ -244,6 +255,7 @@ public void pesquisaAno(int ano){
             
        
          ConnectionFactory.closeConnection(con, stmt, rs);
+         
         
         }
         try {
