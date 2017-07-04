@@ -71,6 +71,26 @@ public class exibir2 extends javax.swing.JInternalFrame {
                 
             
             });
+        }}
+    public void PesquisarTime (String a){
+    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+    TabelaDao tdao = new TabelaDao ();
+    
+        
+        for (tabela t: tdao.pesquisaTabelaPorTime(a)) {
+            modelo.addRow(new Object[]{
+                t.getnomes(0),
+                t.getTabela(0,0),
+                t.getTabela(0,1),
+                t.getTabela(0,2),
+                t.getTabela(0,3),
+                t.getTabela(0,4),
+                t.getTabela(0,5),
+                t.getTabela(0,6),
+                t.getTabela(0,7),
+                
+            
+            });
         }
   
     

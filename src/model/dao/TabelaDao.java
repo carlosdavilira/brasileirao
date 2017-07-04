@@ -270,5 +270,43 @@ public void pesquisaAno(int ano){
     }
        
     }
+public List<tabela> pesquisaTabelaPorTime(String a){
+        Connection con = ConnectionFactory.getConnection();
+       
+        PreparedStatement stmt = null;
+        List<tabela> resultado = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            stmt = con.prepareStatement("SELECT * FROM tabela where tabela.time = ? ");
+            stmt.setString(1, a);
+            rs = stmt.executeQuery();
+   
+            
+            while (rs.next()) {                
+                
+              tabela t = new tabela();
+              t.setnomes(rs.getString("time"),0);
+              t.setTabela(0, 0, rs.getInt("pontos"));
+              t.setTabela(0, 1, rs.getInt("jogos"));
+              t.setTabela(0, 2, rs.getInt("vitorias"));
+              t.setTabela(0, 3, rs.getInt("derrotas"));
+              t.setTabela(0, 4, rs.getInt("empates"));
+              t.setTabela(0, 5, rs.getInt("gols_feitos"));
+              t.setTabela(0, 6, rs.getInt("gols_sofridos"));
+              t.setTabela(0, 7, rs.getInt("saldo_gols"));        
+              
+              resultado.add(t);
+            }  
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            
+         ConnectionFactory.closeConnection(con, stmt,rs);
+        
+        }    
+        return resultado;
+    }
 }
 //teste2
