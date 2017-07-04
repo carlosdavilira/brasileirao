@@ -47,7 +47,6 @@ public class Home extends javax.swing.JFrame {
         jRadioButtonMenuItem8 = new javax.swing.JRadioButtonMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jRadioButtonMenuItem6 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem7 = new javax.swing.JRadioButtonMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -150,10 +149,12 @@ public class Home extends javax.swing.JFrame {
         jMenu1.setText("Pesquisar");
 
         jRadioButtonMenuItem6.setText("Pesquisar por Time");
+        jRadioButtonMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jRadioButtonMenuItem6);
-
-        jRadioButtonMenuItem7.setText("Pesquisar por Pontos");
-        jMenu1.add(jRadioButtonMenuItem7);
 
         jMenuItem1.setText("Pesquisar por Ano");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -226,6 +227,16 @@ public class Home extends javax.swing.JFrame {
         exibir.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jRadioButtonMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        String a;
+        exibir2 exibir = new exibir2();
+        jDesktopPane1.add(exibir);
+        a = JOptionPane.showInputDialog(null, "Informe o time");
+        exibir.PesquisarTime(a);
+        exibir.setVisible(true);
+    }//GEN-LAST:event_jRadioButtonMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -279,7 +290,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem6;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem7;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem8;
     // End of variables declaration//GEN-END:variables
 }
