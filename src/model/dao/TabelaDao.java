@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.bean.TabelaClass;
 import model.bean.tabela;
 
 /**
@@ -308,5 +309,101 @@ public List<tabela> pesquisaTabelaPorTime(String a){
         }    
         return resultado;
     }
+
+
+public TabelaClass pesquisarLider(){
+    Connection con = ConnectionFactory.getConnection();
+       
+        PreparedStatement stmt = null;
+        List<tabela> resultado = new ArrayList<>();
+        ResultSet rs = null;
+        ArrayList<TabelaClass> resultadoBruto = new ArrayList();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM tabela as t,campeonatos as c where t.campeonatoid = c.campeonatoid ");
+           
+            rs = stmt.executeQuery();
+   
+            
+            while (rs.next()) {                
+              TabelaClass t = new TabelaClass();
+              
+             // tabela t = new tabela();
+              t.setNome(rs.getString("time"));
+              t.setPontos(rs.getInt("pontos"));
+              t.setJogos(rs.getInt("jogos"));
+              t.setVitorias(rs.getInt("vitorias"));
+              t.setDerrotas(rs.getInt("derrotas"));
+              t.setEmpates(rs.getInt("empates"));
+              t.setGolsFeitos(rs.getInt("gols_feitos"));
+              t.setGolsSofridos(rs.getInt("gols_sofridos"));
+              t.setSaldoGols(rs.getInt("saldo_gols"));    
+              t.setAno(rs.getInt("ano"));
+             
+              
+              resultadoBruto.add(t);
+            }  
+            //apenas mostrando que a select esta funcionando.
+          //  for(TabelaClass t : resultadoBruto){
+            //  System.out.print(t.getNome()+ " - "+ t.getJogos()+ " - " + t.getVitorias() + " - " +t.getDerrotas() +"\n");
+
+         //   }          
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TabelaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            
+         ConnectionFactory.closeConnection(con, stmt,rs);
+        
+        }    
+        return procurarLider(resultadoBruto);    
+}
+private TabelaClass procurarLider(ArrayList<TabelaClass> lista){
+    
+   ArrayList<TabelaClass> times = new ArrayList<>();
+  times = criarTimes();
+    for(TabelaClass time : lista){
+        if(time.getNome().equals("Palmeiras")){
+            times.get(0).setTotalVitorias(times.get(0).getTotalVitorias()+time.getVitorias());
+        }
+        else if(time.getNome().equals("Sao Paulo")){
+            times.get(1).setTotalVitorias(times.get(1).getTotalVitorias()+time.getVitorias());
+        }
+        else if(time.getNome().equals("Flamengo")){
+            times.get(2).setTotalVitorias(times.get(2).getTotalVitorias()+time.getVitorias());
+        }
+         else if(time.getNome().equals("Gremio")){
+            times.get(3).setTotalVitorias(times.get(3).getTotalVitorias()+time.getVitorias());
+        }
+        }
+  
+
+
+    //Ordenando vitorias - BubleSort - Depois desse trecho os times estao por ordem crescente de vitorias
+       for(int i = 0; i < times.size(); i++){
+           for(int j = 0; j <times.size()-1;j++ ){
+               if(times.get(j).getTotalVitorias() > times.get(j+1).getTotalVitorias()){
+               TabelaClass aux = times.get(j+1);
+               times.set(j+1,times.get(j));               
+               times.set(j,aux);                 
+               }
+           }           
+       } 
+    
+    
+    
+    return times.get(times.size()-1);
+
+}
+
+private ArrayList<TabelaClass> criarTimes(){
+    ArrayList<TabelaClass> times = new ArrayList<>();
+    times.add(new TabelaClass("Palmeiras"));
+    times.add(new TabelaClass("Sao Paulo"));
+    times.add(new TabelaClass("Flamengo"));
+    times.add(new TabelaClass("Gremio"));
+
+    return times;
+}
 }
 //teste2

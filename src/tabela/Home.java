@@ -7,6 +7,7 @@ package tabela;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import model.bean.TabelaClass;
 import model.dao.TabelaDao;
 
 /**
@@ -210,11 +211,20 @@ public class Home extends javax.swing.JFrame {
     private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
         // TODO add your handling code here:
       
-        exibir2 exibir = new exibir2();
-        jDesktopPane1.add(exibir);
+       // exibir2 exibir = new exibir2();
+        //jDesktopPane1.add(exibir);
+       //exibir.lerPrimeiro();
+       // exibir.setVisible(true);
        
-        exibir.lerPrimeiro();
-        exibir.setVisible(true);
+       
+       
+        TabelaDao tb = new TabelaDao();
+        
+        TabelaClass lider = tb.pesquisarLider();
+       System.out.println(lider.getNome() + " " +lider.getTotalVitorias());
+        ExibirLider exibirLider  = new ExibirLider(lider);
+       jDesktopPane1.add(exibirLider);
+       exibirLider.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
     private void jRadioButtonMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem8ActionPerformed
