@@ -6,6 +6,7 @@
 package tabela;
 
 import java.awt.Component;
+import java.util.List;
 import javax.swing.JOptionPane;
 import model.bean.TabelaClass;
 import model.dao.TabelaDao;
@@ -195,7 +196,14 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
     private void jRadioButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem3ActionPerformed
+ 
+        TabelaDao tb = new TabelaDao();
         
+      List<TabelaClass> lideres = tb.pesquisarLider();
+       System.out.println(lideres.get(lideres.size()-1).getNome() + " " +lideres.get(lideres.size()-1).getTotalVitorias());
+        ExibirLider exibirLider  = new ExibirLider(lideres);
+       jDesktopPane1.add(exibirLider);
+       exibirLider.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
@@ -220,9 +228,9 @@ public class Home extends javax.swing.JFrame {
        
         TabelaDao tb = new TabelaDao();
         
-        TabelaClass lider = tb.pesquisarLider();
-       System.out.println(lider.getNome() + " " +lider.getTotalVitorias());
-        ExibirLider exibirLider  = new ExibirLider(lider);
+      List<TabelaClass> lideres = tb.pesquisarLider();
+       System.out.println(lideres.get(lideres.size()-1).getNome() + " " +lideres.get(lideres.size()-1).getTotalVitorias());
+        ExibirLider exibirLider  = new ExibirLider(lideres.get(lideres.size()-1));
        jDesktopPane1.add(exibirLider);
        exibirLider.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed

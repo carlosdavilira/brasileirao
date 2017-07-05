@@ -311,7 +311,7 @@ public List<tabela> pesquisaTabelaPorTime(String a){
     }
 
 
-public TabelaClass pesquisarLider(){
+public ArrayList<TabelaClass> pesquisarLider(){
     Connection con = ConnectionFactory.getConnection();
        
         PreparedStatement stmt = null;
@@ -356,9 +356,9 @@ public TabelaClass pesquisarLider(){
          ConnectionFactory.closeConnection(con, stmt,rs);
         
         }    
-        return procurarLider(resultadoBruto);    
+        return procurarLideres(resultadoBruto);    
 }
-private TabelaClass procurarLider(ArrayList<TabelaClass> lista){
+private ArrayList<TabelaClass> procurarLideres(ArrayList<TabelaClass> lista){
     
    ArrayList<TabelaClass> times = new ArrayList<>();
   times = criarTimes();
@@ -392,7 +392,7 @@ private TabelaClass procurarLider(ArrayList<TabelaClass> lista){
     
     
     
-    return times.get(times.size()-1);
+    return times;
 
 }
 

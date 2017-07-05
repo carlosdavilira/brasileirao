@@ -5,6 +5,7 @@
  */
 package tabela;
 
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.bean.TabelaClass;
 import model.bean.tabela;
@@ -20,28 +21,47 @@ public class ExibirLider extends javax.swing.JInternalFrame {
      * Creates new form NewJInternalFrame
      */
     TabelaClass lider;
+    List<TabelaClass> lista = null;
     public ExibirLider(TabelaClass lider) {
         
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         this.lider = lider;
-        lerTabela();
-        
-       
-        
-        
+        lerTabela();     
     }
+    
+      public ExibirLider(List<TabelaClass> lista) {
+        
+        initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        this.lista = lista;
+        lerTabela();     
+    }
+      
     public void lerTabela(){
-    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();   
+    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();  
+    
+    if(lista == null){
      modelo.addRow(new Object[]{             
                 lider.getNome(),
                lider.getTotalVitorias()               
             });
-      
+     }   
     
-    
-    
-    }    
+    else{
+        System.out.println(lista.get(2).getNome());
+            for(int i = (lista.size()-1); i <= 0 ; i--){
+            modelo.addRow(new Object[]{             
+                lista.get(i).getNome(),
+               lista.get(i).getTotalVitorias()               
+            });}
+            
+            
+             for(TabelaClass t : lista){
+              System.out.print(t.getNome()+ " - "+ t.getTotalVitorias()+"\n");
+             }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +84,7 @@ public class ExibirLider extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nome do Lider", "Total de Vitorias"
+                "Nome do Time", "Total de Vitorias"
             }
         ) {
             boolean[] canEdit = new boolean [] {
