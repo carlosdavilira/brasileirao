@@ -42,6 +42,8 @@ public class ExibirLider extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();  
     
     if(lista == null){
+                System.out.println("if tambem");
+
      modelo.addRow(new Object[]{             
                 lider.getNome(),
                lider.getTotalVitorias()               
@@ -49,7 +51,7 @@ public class ExibirLider extends javax.swing.JInternalFrame {
      }   
     
     else{
-        System.out.println(lista.get(2).getNome());
+        System.out.println("else");
             for(int i = (lista.size()-1); i <= 0 ; i--){
             modelo.addRow(new Object[]{             
                 lista.get(i).getNome(),

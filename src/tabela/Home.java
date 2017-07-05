@@ -200,8 +200,7 @@ public class Home extends javax.swing.JFrame {
         TabelaDao tb = new TabelaDao();
         
       List<TabelaClass> lideres = tb.pesquisarLider();
-       System.out.println(lideres.get(lideres.size()-1).getNome() + " " +lideres.get(lideres.size()-1).getTotalVitorias());
-        ExibirLider exibirLider  = new ExibirLider(lideres);
+       ExibirLider exibirLider  = new ExibirLider(lideres);
        jDesktopPane1.add(exibirLider);
        exibirLider.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
@@ -229,7 +228,6 @@ public class Home extends javax.swing.JFrame {
         TabelaDao tb = new TabelaDao();
         
       List<TabelaClass> lideres = tb.pesquisarLider();
-       System.out.println(lideres.get(lideres.size()-1).getNome() + " " +lideres.get(lideres.size()-1).getTotalVitorias());
         ExibirLider exibirLider  = new ExibirLider(lideres.get(lideres.size()-1));
        jDesktopPane1.add(exibirLider);
        exibirLider.setVisible(true);
